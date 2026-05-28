@@ -14,6 +14,7 @@ npm start                     # http://localhost:3030
 ## API Endpoints
 
 ### Auth
+
 | Method | Path              | Auth | Description       |
 |--------|-------------------|------|-------------------|
 | POST   | /api/auth/register| no   | Create account    |
@@ -21,11 +22,13 @@ npm start                     # http://localhost:3030
 | GET    | /api/auth/me      | yes  | Current user info |
 
 ### Health
+
 | Method | Path     | Auth | Description       |
 |--------|----------|------|-------------------|
 | GET    | /health  | no   | Health check      |
 
 ### Customers
+
 | Method | Path               | Auth | Description                                          |
 |--------|--------------------|------|------------------------------------------------------|
 | GET    | /api/customers     | yes  | Paginated list with `?q=` search and `?page=&limit=` |
@@ -35,6 +38,7 @@ npm start                     # http://localhost:3030
 | DELETE | /api/customers/:id | yes  | Hard cascade (removes orders, items, payments, history) |
 
 ### Orders
+
 | Method | Path            | Auth | Description                                                     |
 |--------|-----------------|------|-----------------------------------------------------------------|
 | POST   | /api/orders     | yes  | Create with `items[]`, auto-calculates `total_amount`           |
@@ -43,7 +47,24 @@ npm start                     # http://localhost:3030
 | PUT    | /api/orders/:id | yes  | Update status/notes, optionally replace items (recalc total)    |
 | DELETE | /api/orders/:id | yes  | Hard delete with history cleanup                                |
 
+### Payments
+
+| Method | Path               | Auth | Description                                       |
+|--------|--------------------|------|---------------------------------------------------|
+| GET    | /api/payments      | yes  | List with `?order_id=`, `?status=`, `?method=`   |
+| POST   | /api/payments      | yes  | Create (order_id, amount, method, status, payment_date) |
+| DELETE | /api/payments/:id  | yes  | Hard delete                                       |
+
+### History
+
+| Method | Path              | Auth | Description                                       |
+|--------|-------------------|------|---------------------------------------------------|
+| GET    | /api/history      | yes  | List with `?entity_type=` and `?entity_id=`       |
+| POST   | /api/history      | yes  | Log an entry (entity_type, entity_id, action, changes) |
+| DELETE | /api/history/:id  | yes  | Delete an entry                                   |
+
 ### Seed Users
+
 | Username | Password  | Role  |
 |----------|-----------|-------|
 | admin    | admin123  | admin |
@@ -66,7 +87,9 @@ src/
 ├── routes/
 │   ├── auth.js
 │   ├── customers.js
-│   └── orders.js
+│   ├── orders.js
+│   ├── payments.js
+│   └── history.js
 ├── app.js
 ├── db.js
 ├── seed.js

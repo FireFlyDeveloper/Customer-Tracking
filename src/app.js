@@ -8,6 +8,8 @@ const errorHandler = require('./middleware/errorHandler');
 const authRoutes = require('./routes/auth');
 const customersRoutes = require('./routes/customers');
 const ordersRoutes = require('./routes/orders');
+const paymentsRoutes = require('./routes/payments');
+const historyRoutes = require('./routes/history');
 
 const app = express();
 
@@ -25,6 +27,8 @@ app.get('/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/customers', customersRoutes);
 app.use('/api/orders', ordersRoutes);
+app.use('/api/payments', paymentsRoutes);
+app.use('/api/history', historyRoutes);
 
 // ── Catch-all 404 ───────────────────────────────────────────────────
 app.use((req, res) => {
