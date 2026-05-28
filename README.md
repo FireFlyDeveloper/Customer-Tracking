@@ -25,6 +25,24 @@ npm start                     # http://localhost:3030
 |--------|----------|------|-------------------|
 | GET    | /health  | no   | Health check      |
 
+### Customers
+| Method | Path               | Auth | Description                                          |
+|--------|--------------------|------|------------------------------------------------------|
+| GET    | /api/customers     | yes  | Paginated list with `?q=` search and `?page=&limit=` |
+| GET    | /api/customers/:id | yes  | Single customer with nested `orders[]` + `history[]`  |
+| POST   | /api/customers     | yes  | Create (name required, email unique → 409)           |
+| PUT    | /api/customers/:id | yes  | Partial update (dynamic SET)                          |
+| DELETE | /api/customers/:id | yes  | Hard cascade (removes orders, items, payments, history) |
+
+### Orders
+| Method | Path            | Auth | Description                                                     |
+|--------|-----------------|------|-----------------------------------------------------------------|
+| POST   | /api/orders     | yes  | Create with `items[]`, auto-calculates `total_amount`           |
+| GET    | /api/orders     | yes  | Paginated list with `?customer_id=` and `?status=` filters     |
+| GET    | /api/orders/:id | yes  | Single order with `items[]` + `payments[]`                     |
+| PUT    | /api/orders/:id | yes  | Update status/notes, optionally replace items (recalc total)    |
+| DELETE | /api/orders/:id | yes  | Hard delete with history cleanup                                |
+
 ### Seed Users
 | Username | Password  | Role  |
 |----------|-----------|-------|
@@ -46,7 +64,9 @@ src/
 │   ├── auth.js
 │   └── errorHandler.js
 ├── routes/
-│   └── auth.js
+│   ├── auth.js
+│   ├── customers.js
+│   └── orders.js
 ├── app.js
 ├── db.js
 ├── seed.js
